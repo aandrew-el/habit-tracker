@@ -162,7 +162,7 @@ export function OnboardingModal({ isOpen, onClose }: OnboardingModalProps) {
                   {currentStep === 0 && (
                     <Button
                       onClick={handleNext}
-                      className="w-full h-14 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-lg font-semibold shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 hover:scale-105 transition-all"
+                      className="w-full h-14 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-lg text-white font-semibold shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 hover:scale-105 transition-all"
                     >
                       Get Started
                       <ArrowRight className="ml-2 h-5 w-5" />
@@ -182,7 +182,7 @@ export function OnboardingModal({ isOpen, onClose }: OnboardingModalProps) {
                       )}
                       <Button
                         onClick={handleNext}
-                        className="flex-1 sm:flex-none sm:px-8 h-12 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 hover:scale-105 transition-all"
+                        className="flex-1 h-12 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 hover:scale-105 transition-all"
                       >
                         Next
                         <ArrowRight className="ml-2 h-4 w-4" />
@@ -193,7 +193,7 @@ export function OnboardingModal({ isOpen, onClose }: OnboardingModalProps) {
                   {currentStep === steps.length - 1 && (
                     <Button
                       onClick={handleComplete}
-                      className="w-full h-14 rounded-xl bg-gradient-to-r from-green-600 to-emerald-600 text-lg font-semibold shadow-lg shadow-green-500/30 hover:shadow-xl hover:shadow-green-500/40 hover:scale-105 transition-all"
+                      className="w-full h-14 rounded-xl bg-gradient-to-r from-green-600 to-emerald-600 text-lg text-white font-semibold shadow-lg shadow-green-500/30 hover:shadow-xl hover:shadow-green-500/40 hover:scale-105 transition-all"
                     >
                       Get Started! 🎉
                     </Button>
