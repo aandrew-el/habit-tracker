@@ -85,7 +85,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             {children}
-            <Toaster position="top-center" richColors expand={false} />
+            <Toaster position="top-center" richColors expand={false} theme="system" />
           </ThemeProvider>
         </ErrorBoundary>
       </body>
