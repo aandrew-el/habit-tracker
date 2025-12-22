@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Script from 'next/script'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
-import { CheckCircle2, Calendar, Smartphone, Shield, Sparkles, Star } from 'lucide-react'
+import { CheckCircle2, Flame, Calendar, Smartphone, Shield, Sparkles, Star } from 'lucide-react'
 
 export default function HomePage() {
   const structuredData = {
