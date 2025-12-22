@@ -281,7 +281,7 @@ export function HabitCard({
             <motion.div className="flex-1" whileTap={{ scale: 0.95 }}>
               <Button
                 variant="outline"
-                className="w-full rounded-xl border-2 font-semibold hover:bg-blue-50 hover:border-blue-300 transition-all"
+                className="w-full rounded-xl border-2 font-semibold hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:border-blue-300 dark:hover:border-blue-700 transition-all"
                 onClick={(e) => {
                   e.stopPropagation()
                   onEdit()

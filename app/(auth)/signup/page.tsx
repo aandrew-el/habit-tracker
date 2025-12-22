@@ -169,7 +169,7 @@ export default function SignupPage() {
           <CardFooter className="flex flex-col gap-4">
             <Button 
               type="submit" 
-              className="h-12 w-full rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-base font-semibold shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 hover:scale-105 transition-all" 
+              className="h-12 w-full rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-base font-semibold shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 hover:scale-105 transition-all" 
               disabled={loading}
             >
               {loading ? (

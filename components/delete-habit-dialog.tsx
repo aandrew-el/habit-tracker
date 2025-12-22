@@ -91,7 +91,7 @@ export function DeleteHabitDialog({
               handleDelete()
             }}
             disabled={isDeleting}
-            className="rounded-xl bg-gradient-to-r from-red-600 to-red-700 font-semibold shadow-lg shadow-red-500/30 hover:shadow-xl hover:shadow-red-500/40 hover:from-red-700 hover:to-red-800"
+            className="rounded-xl bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold shadow-lg shadow-red-500/30 hover:shadow-xl hover:shadow-red-500/40 hover:from-red-700 hover:to-red-800"
           >
             {isDeleting ? (
               <div className="flex items-center gap-2">
