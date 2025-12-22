@@ -277,7 +277,7 @@ export default function JournalPage() {
         </div>
         <Button
           onClick={() => setIsQuickAddOpen(true)}
-          className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all"
+          className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all"
         >
           <PenLine className="h-4 w-4 mr-2" />
           Write Reflection
@@ -445,7 +445,7 @@ export default function JournalPage() {
                 <Button
                   onClick={() => setIsQuickAddOpen(true)}
                   size="lg"
-                  className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all"
+                  className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all"
                 >
                   <PenLine className="h-5 w-5 mr-2" />
                   Write Your First Reflection
