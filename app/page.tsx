@@ -58,7 +58,7 @@ export default function HomePage() {
               <Button variant="ghost" className="font-medium">Sign in</Button>
             </Link>
             <Link href="/signup">
-              <Button className="bg-gradient-to-r from-blue-600 to-indigo-600 font-medium shadow-lg shadow-blue-500/30 transition-all hover:shadow-xl hover:shadow-blue-500/40">
+              <Button className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium shadow-lg shadow-blue-500/30 transition-all hover:shadow-xl hover:shadow-blue-500/40">
                 Get started
               </Button>
             </Link>
@@ -119,7 +119,7 @@ export default function HomePage() {
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                   <Button 
                     size="lg" 
-                    className="h-14 px-8 text-lg font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 shadow-xl shadow-blue-500/30 transition-all hover:shadow-2xl hover:shadow-blue-500/40"
+                    className="h-14 px-8 text-lg font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-xl shadow-blue-500/30 transition-all hover:shadow-2xl hover:shadow-blue-500/40"
                   >
                     Start tracking for free
                   </Button>
