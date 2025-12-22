@@ -201,10 +201,10 @@ export function HabitCard({
           </CardDescription>
         </CardHeader>
 
-        <CardContent className="flex-1 space-y-3 pt-0">
+        <CardContent className="flex-1 space-y-3 -mt-2">
           {habit.description && (
             <p
-              className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed break-all line-clamp-2 cursor-help"
+              className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed break-all line-clamp-2 cursor-help mb-1"
               title={habit.description}
             >
               {habit.description}
