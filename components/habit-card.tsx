@@ -186,7 +186,7 @@ export function HabitCard({
           className={`group flex flex-col border-2 ${categoryConfig.borderClass} shadow-lg shadow-blue-500/5 backdrop-blur-sm bg-white/95 dark:bg-gray-800/95 hover:shadow-2xl hover:shadow-blue-500/10 transition-all cursor-pointer`}
           onClick={() => setIsDetailOpen(true)}
         >
-        <CardHeader className="pb-2">
+        <CardHeader className="pb-1">
           <div className="flex items-start justify-between gap-2 mb-2">
             <CardTitle className="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-gray-100 dark:to-gray-300 bg-clip-text text-transparent line-clamp-2 break-words" title={habit.name}>
               {habit.name}
@@ -201,10 +201,10 @@ export function HabitCard({
           </CardDescription>
         </CardHeader>
 
-        <CardContent className="flex-1 space-y-3 pt-1">
+        <CardContent className="flex-1 space-y-3 pt-0">
           {habit.description && (
             <p
-              className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed -mt-1 mb-1 break-all line-clamp-2 cursor-help"
+              className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed break-all line-clamp-2 cursor-help"
               title={habit.description}
             >
               {habit.description}
