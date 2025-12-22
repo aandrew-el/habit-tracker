@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Script from 'next/script'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
-import { CheckCircle2, Flame, Calendar, Smartphone, Shield, Sparkles, Star } from 'lucide-react'
+import { CheckCircle2, Calendar, Smartphone, Shield, Sparkles, Star } from 'lucide-react'
 
 export default function HomePage() {
   const structuredData = {
@@ -47,7 +47,10 @@ export default function HomePage() {
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
           <div className="flex items-center gap-2">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600">
-              <Flame className="h-5 w-5 text-white" />
+              <svg className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4" />
+                <path strokeLinecap="round" d="M21 12a9 9 0 11-6.22-8.56" />
+              </svg>
             </div>
             <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
               HabitFlow
@@ -310,7 +313,10 @@ export default function HomePage() {
         <div className="container mx-auto px-4 text-center">
           <div className="flex items-center justify-center gap-2 mb-3">
             <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600">
-              <Flame className="h-4 w-4 text-white" />
+              <svg className="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4" />
+                <path strokeLinecap="round" d="M21 12a9 9 0 11-6.22-8.56" />
+              </svg>
             </div>
             <span className="font-semibold text-gray-900 dark:text-white">HabitFlow</span>
           </div>
