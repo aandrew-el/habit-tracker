@@ -109,7 +109,7 @@ Rules:
 - If user is doing well, can return empty arrays for some fields
 - Base suggestions on actual data patterns, not generic advice`
 
-// Minimum data requirements (lowered for testing - set back to 7 for production)
-export const MIN_DAYS_FOR_INSIGHTS = 1
+// Minimum data requirements
+export const MIN_DAYS_FOR_INSIGHTS = 7
 export const MIN_COMPLETIONS_FOR_CORRELATIONS = 10
 export const MIN_HABITS_FOR_INSIGHTS = 1
