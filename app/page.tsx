@@ -1,13 +1,47 @@
 'use client'
 
 import Link from 'next/link'
+import Script from 'next/script'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { CheckCircle2, Flame, Calendar, Smartphone, Shield, Sparkles, Star } from 'lucide-react'
 
 export default function HomePage() {
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'HabitFlow',
+    applicationCategory: 'LifestyleApplication',
+    operatingSystem: 'Web Browser',
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+    },
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '5.0',
+      ratingCount: '3',
+    },
+    description: 'The simplest habit tracker that actually works. Track your habits, build streaks, and achieve your goals with beautiful analytics and insights.',
+    featureList: [
+      'Track unlimited habits',
+      'Build lasting streaks',
+      'Visual progress calendar',
+      'Works everywhere',
+      'Your data is secure',
+      '100% free forever',
+    ],
+  }
+
   return (
-    <div className="flex min-h-screen flex-col">
+    <>
+      <Script
+        id="structured-data"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+      <div className="flex min-h-screen flex-col">
       {/* Header with backdrop blur on scroll */}
       <header className="sticky top-0 z-50 border-b bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm">
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
@@ -286,5 +320,6 @@ export default function HomePage() {
         </div>
       </footer>
     </div>
+    </>
   )
 }

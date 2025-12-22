@@ -57,8 +57,8 @@ export function DeleteHabitDialog({
       toast.success('🗑️ Habit removed')
       onOpenChange(false)
       onHabitDeleted()
-    } catch (err) {
-      console.error('Error deleting habit:', err)
+    } catch {
+      // Error already shown via toast
     } finally {
       setIsDeleting(false)
     }

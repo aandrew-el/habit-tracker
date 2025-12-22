@@ -80,7 +80,7 @@ export function EditHabitDialog({
       const supabase = createClient()
 
       // Update habit
-      const { error: updateError } = await supabase
+      const { data: updatedData, error: updateError } = await supabase
         .from('habits')
         .update({
           name: name.trim(),
@@ -89,9 +89,11 @@ export function EditHabitDialog({
           category,
         })
         .eq('id', habit.id)
+        .select()
+        .single()
 
       if (updateError) {
-        toast.error('❌ Something went wrong. Please try again.')
+        toast.error(`❌ Failed to update: ${updateError.message}`)
         throw updateError
       }
 
@@ -99,8 +101,8 @@ export function EditHabitDialog({
       toast.success('✨ Habit updated!')
       onOpenChange(false)
       onHabitUpdated()
-    } catch (err) {
-      console.error('Error updating habit:', err)
+    } catch {
+      // Error already shown via toast
     } finally {
       setIsSubmitting(false)
     }
@@ -117,7 +119,7 @@ export function EditHabitDialog({
           <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
             Edit Habit
           </DialogTitle>
-          <DialogDescription className="text-base text-gray-600">
+          <DialogDescription className="text-base text-gray-600 dark:text-gray-400">
             Update your habit details and tracking frequency.
           </DialogDescription>
         </DialogHeader>
@@ -125,7 +127,7 @@ export function EditHabitDialog({
         <form onSubmit={handleSubmit}>
           <div className="space-y-5 py-4">
             <div className="space-y-2">
-              <Label htmlFor="edit-name" className="text-sm font-semibold text-gray-700">
+              <Label htmlFor="edit-name" className="text-sm font-semibold text-gray-700 dark:text-gray-300">
                 Habit Name <span className="text-red-500">*</span>
               </Label>
               <Input
@@ -135,12 +137,13 @@ export function EditHabitDialog({
                 onChange={(e) => setName(e.target.value)}
                 disabled={isSubmitting}
                 autoFocus
-                className="h-11 rounded-xl border-2 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all"
+                maxLength={50}
+                className="h-11 rounded-xl border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-900/50 transition-all"
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="edit-description" className="text-sm font-semibold text-gray-700">
+              <Label htmlFor="edit-description" className="text-sm font-semibold text-gray-700 dark:text-gray-300">
                 Description (optional)
               </Label>
               <Textarea
@@ -150,12 +153,14 @@ export function EditHabitDialog({
                 onChange={(e) => setDescription(e.target.value)}
                 disabled={isSubmitting}
                 rows={3}
-                className="rounded-xl border-2 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all"
+                maxLength={200}
+                className="rounded-xl border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-900/50 transition-all resize-none max-h-32 overflow-y-auto"
+                style={{ wordBreak: 'break-all', overflowWrap: 'break-word' }}
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="edit-category" className="text-sm font-semibold text-gray-700">
+              <Label htmlFor="edit-category" className="text-sm font-semibold text-gray-700 dark:text-gray-300">
                 Category
               </Label>
               <Select
@@ -163,7 +168,7 @@ export function EditHabitDialog({
                 onValueChange={setCategory}
                 disabled={isSubmitting}
               >
-                <SelectTrigger id="edit-category" className="h-11 w-full rounded-xl border-2 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100">
+                <SelectTrigger id="edit-category" className="h-11 w-full rounded-xl border-2 border-gray-200 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-900/50">
                   <SelectValue placeholder="Select category" />
                 </SelectTrigger>
                 <SelectContent>
@@ -180,7 +185,7 @@ export function EditHabitDialog({
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="edit-frequency" className="text-sm font-semibold text-gray-700">
+              <Label htmlFor="edit-frequency" className="text-sm font-semibold text-gray-700 dark:text-gray-300">
                 Frequency
               </Label>
               <Select
@@ -190,7 +195,7 @@ export function EditHabitDialog({
                 }
                 disabled={isSubmitting}
               >
-                <SelectTrigger id="edit-frequency" className="h-11 w-full rounded-xl border-2 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100">
+                <SelectTrigger id="edit-frequency" className="h-11 w-full rounded-xl border-2 border-gray-200 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-900/50">
                   <SelectValue placeholder="Select frequency" />
                 </SelectTrigger>
                 <SelectContent>

@@ -73,9 +73,10 @@ export function DayDetailDialog({
                     {isCompleted ? '✅' : '⬜'}
                   </span>
                   <span
-                    className={`text-base ${
+                    className={`text-base truncate ${
                       isCompleted ? 'font-semibold text-gray-900' : 'text-gray-400'
                     }`}
+                    title={habit.name}
                   >
                     {habit.name}
                   </span>

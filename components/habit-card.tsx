@@ -10,6 +10,8 @@ import { Button } from '@/components/ui/button'
 import { calculateCurrentStreak, calculateLongestStreak } from '@/lib/streak-calculator'
 import { CheckCircle2, Pencil, Trash2, Flame, Award } from 'lucide-react'
 import { getCategoryConfig } from '@/lib/categories'
+import { HabitDetailDialog } from '@/components/habit-detail-dialog'
+import { HabitNoteDialog } from '@/components/habit-note-dialog'
 
 interface HabitCardProps {
   habit: {
@@ -35,6 +37,9 @@ export function HabitCard({
   onCheckOff,
 }: HabitCardProps) {
   const [isCheckingOff, setIsCheckingOff] = useState(false)
+  const [isDetailOpen, setIsDetailOpen] = useState(false)
+  const [isNoteDialogOpen, setIsNoteDialogOpen] = useState(false)
+  const [completedAtForNote, setCompletedAtForNote] = useState<string>('')
 
   const completionDates = completions.map((c) => new Date(c.completed_at))
   const currentStreak = calculateCurrentStreak(completionDates)
@@ -108,16 +113,17 @@ export function HabitCard({
         throw new Error('You must be logged in')
       }
 
-      // Get today's date in ISO format (YYYY-MM-DD)
-      const today = new Date().toISOString().split('T')[0]
+      // Get current timestamp (full date + time for special achievements)
+      const now = new Date()
+      const today = now.toISOString().split('T')[0]
 
-      // Insert completion
+      // Insert completion with full timestamp
       const { error: insertError } = await supabase
         .from('habit_completions')
         .insert({
           habit_id: habit.id,
           user_id: user.id,
-          completed_at: today,
+          completed_at: now.toISOString(), // Store full timestamp for time-based achievements
         })
 
       if (insertError) {
@@ -135,9 +141,17 @@ export function HabitCard({
       const updatedCompletionDates = [...completionDates, new Date()]
       const updatedStreak = calculateCurrentStreak(updatedCompletionDates)
 
-      // Success - show toast
-      toast.success(`✅ Nice work! Streak: ${updatedStreak} day${updatedStreak === 1 ? '' : 's'}`)
-      
+      // Success - show toast with option to add note
+      toast.success(`✅ Nice work! Streak: ${updatedStreak} day${updatedStreak === 1 ? '' : 's'}`, {
+        action: {
+          label: 'Add Note',
+          onClick: () => {
+            setCompletedAtForNote(today)
+            setIsNoteDialogOpen(true)
+          },
+        },
+      })
+
       // Trigger confetti animation
       confetti({
         particleCount: 100,
@@ -151,8 +165,7 @@ export function HabitCard({
 
       // Trigger refresh
       onCheckOff()
-    } catch (err) {
-      console.error('Error checking off habit:', err)
+    } catch {
       // Still refresh to get latest state
       onCheckOff()
     } finally {
@@ -161,17 +174,21 @@ export function HabitCard({
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      whileHover={{ y: -4, scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
-      transition={{ type: "spring", stiffness: 300, damping: 20 }}
-    >
-      <Card className={`group flex flex-col border-2 ${categoryConfig.borderClass} shadow-lg shadow-blue-500/5 backdrop-blur-sm bg-white/95 dark:bg-gray-800/95 hover:shadow-2xl hover:shadow-blue-500/10 transition-all`}>
-        <CardHeader className="pb-3">
+    <>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        whileHover={{ y: -4, scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+      >
+        <Card
+          className={`group flex flex-col border-2 ${categoryConfig.borderClass} shadow-lg shadow-blue-500/5 backdrop-blur-sm bg-white/95 dark:bg-gray-800/95 hover:shadow-2xl hover:shadow-blue-500/10 transition-all cursor-pointer`}
+          onClick={() => setIsDetailOpen(true)}
+        >
+        <CardHeader className="pb-2">
           <div className="flex items-start justify-between gap-2 mb-2">
-            <CardTitle className="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-gray-100 dark:to-gray-300 bg-clip-text text-transparent">
+            <CardTitle className="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-gray-100 dark:to-gray-300 bg-clip-text text-transparent line-clamp-2 break-words" title={habit.name}>
               {habit.name}
             </CardTitle>
             <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg ${categoryConfig.bgClass} ${categoryConfig.textClass} text-xs font-semibold border ${categoryConfig.borderClass}`}>
@@ -184,12 +201,15 @@ export function HabitCard({
           </CardDescription>
         </CardHeader>
 
-        <CardContent className="flex-1 space-y-4">
-        {habit.description && (
-          <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-            {habit.description}
-          </p>
-        )}
+        <CardContent className="flex-1 space-y-3 pt-1">
+          {habit.description && (
+            <p
+              className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed -mt-1 mb-1 break-all line-clamp-2 cursor-help"
+              title={habit.description}
+            >
+              {habit.description}
+            </p>
+          )}
 
           <div className="flex flex-wrap gap-2">
             <motion.div 
@@ -232,7 +252,10 @@ export function HabitCard({
                   ? 'bg-gradient-to-r from-green-500 to-emerald-600 shadow-green-500/30 hover:shadow-green-500/50'
                   : 'bg-gradient-to-r from-blue-600 to-indigo-600 shadow-blue-500/30 hover:shadow-blue-500/50 hover:scale-105 active:scale-95'
               }`}
-              onClick={handleCheckOff}
+              onClick={(e) => {
+                e.stopPropagation()
+                handleCheckOff()
+              }}
               disabled={isCompletedToday || isCheckingOff}
             >
               {isCheckingOff ? (
@@ -259,7 +282,10 @@ export function HabitCard({
               <Button
                 variant="outline"
                 className="w-full rounded-xl border-2 font-semibold hover:bg-blue-50 hover:border-blue-300 transition-all"
-                onClick={onEdit}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  onEdit()
+                }}
               >
                 <Pencil className="h-4 w-4 mr-1.5" />
                 Edit
@@ -269,7 +295,10 @@ export function HabitCard({
               <Button
                 variant="destructive"
                 className="w-full rounded-xl font-semibold shadow-md shadow-red-500/20 hover:shadow-lg hover:shadow-red-500/30 transition-all"
-                onClick={onDelete}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  onDelete()
+                }}
               >
                 <Trash2 className="h-4 w-4 mr-1.5" />
                 Delete
@@ -279,6 +308,26 @@ export function HabitCard({
         </CardFooter>
       </Card>
     </motion.div>
+
+      <HabitDetailDialog
+        isOpen={isDetailOpen}
+        onClose={() => setIsDetailOpen(false)}
+        habit={habit}
+        completions={completions}
+        onEdit={onEdit}
+        onDelete={onDelete}
+        onRefresh={onCheckOff}
+      />
+
+      <HabitNoteDialog
+        isOpen={isNoteDialogOpen}
+        onClose={() => setIsNoteDialogOpen(false)}
+        habitId={habit.id}
+        habitName={habit.name}
+        completedAt={completedAtForNote}
+        onNoteSaved={onCheckOff}
+      />
+    </>
   )
 }
 
