@@ -182,7 +182,7 @@ export function OnboardingModal({ isOpen, onClose }: OnboardingModalProps) {
                       )}
                       <Button
                         onClick={handleNext}
-                        className="w-full h-12 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 font-semibold shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 hover:scale-105 transition-all"
+                        className="flex-1 sm:flex-none sm:px-8 h-12 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 hover:scale-105 transition-all"
                       >
                         Next
                         <ArrowRight className="ml-2 h-4 w-4" />
