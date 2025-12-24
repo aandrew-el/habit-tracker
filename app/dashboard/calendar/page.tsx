@@ -339,60 +339,62 @@ export default function CalendarPage() {
       </motion.div>
 
       {/* Navigation */}
-      <motion.div 
-        className="flex items-center justify-between rounded-2xl border-2 border-gray-200 dark:border-gray-700 bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 p-6 shadow-sm"
+      <motion.div
+        className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between rounded-2xl border-2 border-gray-200 dark:border-gray-700 bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 p-4 sm:p-6 shadow-sm"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
       >
-        <motion.div whileTap={{ scale: 0.95 }}>
-          <Button
-            variant="outline"
-            size="default"
-            onClick={handlePreviousMonth}
-            aria-label="Previous month"
-            className="h-11 w-11 rounded-xl border-2 p-0 hover:bg-blue-50 hover:border-blue-300 transition-all"
-          >
-            <ChevronLeftIcon className="h-5 w-5" />
-          </Button>
-        </motion.div>
-
-        <AnimatePresence mode="wait">
-          <motion.div 
-            key={`${currentYear}-${currentMonth}`}
-            className="flex items-center gap-3"
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.3 }}
-          >
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-              {formatMonthYear(currentYear, currentMonth)}
-            </h2>
-            <motion.div whileTap={{ scale: 0.95 }}>
-              <Button 
-                variant="outline" 
-                size="sm" 
-                onClick={handleToday}
-                className="rounded-lg border-2 font-semibold hover:bg-blue-50 hover:border-blue-300 transition-all"
-              >
-                Today
-              </Button>
-            </motion.div>
+        <div className="flex items-center justify-between sm:justify-start sm:flex-1">
+          <motion.div whileTap={{ scale: 0.95 }}>
+            <Button
+              variant="outline"
+              size="default"
+              onClick={handlePreviousMonth}
+              aria-label="Previous month"
+              className="h-10 w-10 sm:h-11 sm:w-11 rounded-xl border-2 p-0 hover:bg-blue-50 hover:border-blue-300 transition-all"
+            >
+              <ChevronLeftIcon className="h-5 w-5" />
+            </Button>
           </motion.div>
-        </AnimatePresence>
 
-        <motion.div whileTap={{ scale: 0.95 }}>
-          <Button
-            variant="outline"
-            size="default"
-            onClick={handleNextMonth}
-            aria-label="Next month"
-            className="h-11 w-11 rounded-xl border-2 p-0 hover:bg-blue-50 hover:border-blue-300 transition-all"
-          >
-            <ChevronRightIcon className="h-5 w-5" />
-          </Button>
-        </motion.div>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={`${currentYear}-${currentMonth}`}
+              className="flex flex-col items-center sm:flex-row sm:gap-3 sm:mx-auto"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.3 }}
+            >
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
+                {formatMonthYear(currentYear, currentMonth)}
+              </h2>
+              <motion.div whileTap={{ scale: 0.95 }}>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleToday}
+                  className="rounded-lg border-2 font-semibold hover:bg-blue-50 hover:border-blue-300 transition-all mt-1 sm:mt-0"
+                >
+                  Today
+                </Button>
+              </motion.div>
+            </motion.div>
+          </AnimatePresence>
+
+          <motion.div whileTap={{ scale: 0.95 }}>
+            <Button
+              variant="outline"
+              size="default"
+              onClick={handleNextMonth}
+              aria-label="Next month"
+              className="h-10 w-10 sm:h-11 sm:w-11 rounded-xl border-2 p-0 hover:bg-blue-50 hover:border-blue-300 transition-all"
+            >
+              <ChevronRightIcon className="h-5 w-5" />
+            </Button>
+          </motion.div>
+        </div>
       </motion.div>
 
       {/* Legend */}

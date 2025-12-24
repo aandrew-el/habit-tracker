@@ -104,12 +104,12 @@ export function AchievementsShowcase({ unlockedAchievementIds, stats }: Achievem
 
       {/* Category Tabs */}
       <Tabs defaultValue="all" className="w-full" onValueChange={(value) => setSelectedCategory(value as 'all' | 'streak' | 'consistency' | 'milestone' | 'special')}>
-        <TabsList className="grid w-full grid-cols-5 h-auto">
-          <TabsTrigger value="all" className="text-sm">All</TabsTrigger>
-          <TabsTrigger value="streak" className="text-sm">Streaks</TabsTrigger>
-          <TabsTrigger value="consistency" className="text-sm">Consistency</TabsTrigger>
-          <TabsTrigger value="milestone" className="text-sm">Milestones</TabsTrigger>
-          <TabsTrigger value="special" className="text-sm">Special</TabsTrigger>
+        <TabsList className="flex flex-wrap justify-center gap-1 h-auto p-1 sm:grid sm:grid-cols-5 sm:gap-0">
+          <TabsTrigger value="all" className="text-xs sm:text-sm px-3 py-1.5">All</TabsTrigger>
+          <TabsTrigger value="streak" className="text-xs sm:text-sm px-3 py-1.5">Streaks</TabsTrigger>
+          <TabsTrigger value="consistency" className="text-xs sm:text-sm px-3 py-1.5">Consistency</TabsTrigger>
+          <TabsTrigger value="milestone" className="text-xs sm:text-sm px-3 py-1.5">Milestones</TabsTrigger>
+          <TabsTrigger value="special" className="text-xs sm:text-sm px-3 py-1.5">Special</TabsTrigger>
         </TabsList>
 
         <TabsContent value={selectedCategory} className="space-y-6 mt-6">
