@@ -53,10 +53,10 @@ export function AchievementsShowcase({ unlockedAchievementIds, stats }: Achievem
         animate={{ opacity: 1, y: 0 }}
         className="rounded-2xl border-2 border-amber-200 dark:border-amber-800 bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50 dark:from-amber-950/40 dark:via-yellow-950/40 dark:to-orange-950/40 p-6 shadow-xl shadow-amber-500/10"
       >
-        <div className="flex items-start justify-between mb-4">
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-4">
           <div>
-            <h2 className="text-2xl font-bold bg-gradient-to-r from-amber-700 to-orange-600 dark:from-amber-400 dark:to-orange-400 bg-clip-text text-transparent flex items-center gap-2">
-              <TrophyIcon className="h-7 w-7 text-amber-600 dark:text-amber-400" />
+            <h2 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-amber-700 to-orange-600 dark:from-amber-400 dark:to-orange-400 bg-clip-text text-transparent flex items-center gap-2">
+              <TrophyIcon className="h-6 w-6 sm:h-7 sm:w-7 text-amber-600 dark:text-amber-400" />
               Achievements
             </h2>
             <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
@@ -64,12 +64,12 @@ export function AchievementsShowcase({ unlockedAchievementIds, stats }: Achievem
             </p>
           </div>
           <div className="flex gap-2">
-            <div className="text-center px-4 py-2 rounded-xl bg-white/50 dark:bg-gray-900/50 border border-amber-300 dark:border-amber-700">
-              <div className="text-2xl font-bold text-amber-900 dark:text-amber-100">{stats.maxStreak}</div>
+            <div className="text-center px-3 sm:px-4 py-2 rounded-xl bg-white/50 dark:bg-gray-900/50 border border-amber-300 dark:border-amber-700 flex-1 sm:flex-none">
+              <div className="text-xl sm:text-2xl font-bold text-amber-900 dark:text-amber-100">{stats.maxStreak}</div>
               <div className="text-xs text-gray-600 dark:text-gray-400">Max Streak</div>
             </div>
-            <div className="text-center px-4 py-2 rounded-xl bg-white/50 dark:bg-gray-900/50 border border-amber-300 dark:border-amber-700">
-              <div className="text-2xl font-bold text-amber-900 dark:text-amber-100">{stats.totalCompletions}</div>
+            <div className="text-center px-3 sm:px-4 py-2 rounded-xl bg-white/50 dark:bg-gray-900/50 border border-amber-300 dark:border-amber-700 flex-1 sm:flex-none">
+              <div className="text-xl sm:text-2xl font-bold text-amber-900 dark:text-amber-100">{stats.totalCompletions}</div>
               <div className="text-xs text-gray-600 dark:text-gray-400">Completions</div>
             </div>
           </div>
