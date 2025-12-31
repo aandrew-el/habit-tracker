@@ -84,42 +84,41 @@ function DashboardPreview() {
     { name: 'Morning Meditation', streak: 12, color: 'from-violet-500 to-purple-600', completed: true },
     { name: 'Read 30 minutes', streak: 8, color: 'from-blue-500 to-cyan-500', completed: true },
     { name: 'Exercise', streak: 5, color: 'from-orange-500 to-red-500', completed: false },
-    { name: 'Drink 8 glasses of water', streak: 21, color: 'from-emerald-500 to-teal-500', completed: true },
   ]
 
   return (
-    <div className="p-6 h-full">
+    <div className="p-4 sm:p-6 h-full overflow-hidden">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between mb-4 sm:mb-6">
         <div>
-          <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">Tuesday, December 31</div>
-          <div className="text-lg font-semibold text-gray-900 dark:text-white">Today&apos;s Habits</div>
+          <div className="text-xs text-gray-500 dark:text-gray-400 mb-0.5 sm:mb-1">Tuesday, December 31</div>
+          <div className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white">Today&apos;s Habits</div>
         </div>
         <div className="flex items-center gap-2">
-          <div className="px-3 py-1 bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-xs font-medium rounded-full flex items-center gap-1">
+          <div className="px-2 sm:px-3 py-1 bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-xs font-medium rounded-full flex items-center gap-1">
             <span className="text-yellow-300">🔥</span> 12 day streak
           </div>
         </div>
       </div>
 
       {/* Habits list */}
-      <div className="space-y-3">
+      <div className="space-y-2 sm:space-y-3">
         {habits.map((habit, i) => (
           <motion.div
             key={habit.name}
-            className="flex items-center gap-3 p-3 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700"
+            className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.6 + i * 0.1 }}
           >
             {/* Checkbox */}
-            <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
+            <div className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full flex items-center justify-center flex-shrink-0 ${
               habit.completed
                 ? `bg-gradient-to-r ${habit.color} text-white`
                 : 'border-2 border-gray-300 dark:border-gray-600'
             }`}>
               {habit.completed && (
-                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                 </svg>
               )}
@@ -146,16 +145,16 @@ function DashboardPreview() {
       </div>
 
       {/* Progress bar at bottom */}
-      <div className="mt-6">
+      <div className="mt-4 sm:mt-6">
         <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 mb-2">
           <span>Today&apos;s progress</span>
-          <span>3/4 completed</span>
+          <span>2/3 completed</span>
         </div>
         <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
           <motion.div
             className="h-full bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full"
             initial={{ width: 0 }}
-            animate={{ width: '75%' }}
+            animate={{ width: '67%' }}
             transition={{ delay: 1, duration: 0.8, ease: 'easeOut' }}
           />
         </div>

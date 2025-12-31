@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, useInView, useSpring, useTransform } from 'framer-motion'
+import { motion, useInView, useMotionValue, useTransform, animate } from 'framer-motion'
 import { useRef, useEffect } from 'react'
 
 interface AnimatedCounterProps {
@@ -12,21 +12,23 @@ interface AnimatedCounterProps {
 function AnimatedCounter({ value, suffix = '', duration = 2 }: AnimatedCounterProps) {
   const ref = useRef<HTMLSpanElement>(null)
   const isInView = useInView(ref, { once: true })
-
-  const spring = useSpring(0, { duration: duration * 1000 })
-  const display = useTransform(spring, (current) =>
-    Math.floor(current).toLocaleString()
-  )
+  const count = useMotionValue(0)
+  const rounded = useTransform(count, (latest) => Math.floor(latest).toLocaleString())
 
   useEffect(() => {
     if (isInView) {
-      spring.set(value)
+      // Use animate with easeOut - goes up smoothly, no overshoot
+      const controls = animate(count, value, {
+        duration: duration,
+        ease: 'easeOut',
+      })
+      return controls.stop
     }
-  }, [isInView, spring, value])
+  }, [isInView, count, value, duration])
 
   return (
     <span ref={ref}>
-      <motion.span>{display}</motion.span>
+      <motion.span>{rounded}</motion.span>
       {suffix}
     </span>
   )
