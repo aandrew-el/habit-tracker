@@ -65,8 +65,8 @@ export function AppMockup({ imageSrc = '/app-preview.png' }: AppMockupProps) {
           </div>
         </div>
 
-        {/* App content area */}
-        <div className="relative aspect-[16/10] bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 overflow-hidden">
+        {/* App content area - taller on mobile to fit content */}
+        <div className="relative aspect-[4/3] sm:aspect-[16/10] bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
           {/* Simplified dashboard preview */}
           <DashboardPreview />
         </div>
@@ -87,7 +87,7 @@ function DashboardPreview() {
   ]
 
   return (
-    <div className="p-4 sm:p-6 h-full overflow-hidden">
+    <div className="p-4 sm:p-6 h-full flex flex-col">
       {/* Header */}
       <div className="flex items-center justify-between mb-4 sm:mb-6">
         <div>
@@ -102,7 +102,7 @@ function DashboardPreview() {
       </div>
 
       {/* Habits list */}
-      <div className="space-y-2 sm:space-y-3">
+      <div className="space-y-2 sm:space-y-3 flex-1">
         {habits.map((habit, i) => (
           <motion.div
             key={habit.name}
