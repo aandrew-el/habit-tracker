@@ -327,7 +327,7 @@ export default function HomePage() {
                   Ready to build better habits?
                 </h2>
                 <p className="text-blue-100 text-lg mb-8 max-w-xl mx-auto">
-                  Join thousands of people who are already tracking their habits and achieving their goals.
+                  Start tracking your habits today and take the first step toward achieving your goals.
                 </p>
                 <Link href="/signup">
                   <Button
