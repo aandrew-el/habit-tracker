@@ -387,7 +387,7 @@ export default function HomePage() {
                   </svg>
                 </a>
                 <a
-                  href="https://linkedin.com/in/aandrew-el"
+                  href="https://www.linkedin.com/in/aandrewel"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-all hover:scale-110"
