@@ -7,6 +7,10 @@ import { useRef } from 'react'
 import { Button } from '@/components/ui/button'
 import { CheckCircle2, Flame, Calendar, Smartphone, Shield, Sparkles, Star, Quote } from 'lucide-react'
 import { AppMockup } from '@/components/landing/app-mockup'
+import { ScrollIndicator } from '@/components/landing/scroll-indicator'
+import { HowItWorks } from '@/components/landing/how-it-works'
+import { StatsCounter, GitHubStars } from '@/components/landing/stats-counter'
+import { FAQ } from '@/components/landing/faq'
 
 export default function HomePage() {
   const heroRef = useRef<HTMLDivElement>(null)
@@ -47,7 +51,7 @@ export default function HomePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-      <div className="flex min-h-screen flex-col overflow-x-hidden">
+      <div className="flex min-h-screen flex-col overflow-x-hidden noise-overlay">
         {/* Animated gradient background */}
         <motion.div
           className="fixed inset-0 -z-10"
@@ -88,7 +92,7 @@ export default function HomePage() {
 
         {/* Hero Section - Split Layout */}
         <main ref={heroRef} className="flex-1">
-          <section className="container mx-auto px-4 py-16 lg:py-24">
+          <section className="container mx-auto px-4 py-16 lg:py-24 relative min-h-[calc(100vh-4rem)]">
             <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
               {/* Left side - Text content */}
               <div className="space-y-8 text-center lg:text-left">
@@ -168,6 +172,14 @@ export default function HomePage() {
                     <span>AI Insights</span>
                   </div>
                 </motion.div>
+
+                {/* Stats counter */}
+                <StatsCounter />
+
+                {/* GitHub stars */}
+                <div className="flex justify-center lg:justify-start">
+                  <GitHubStars />
+                </div>
               </div>
 
               {/* Right side - App mockup */}
@@ -175,7 +187,13 @@ export default function HomePage() {
                 <AppMockup />
               </div>
             </div>
+
+            {/* Scroll indicator */}
+            <ScrollIndicator />
           </section>
+
+          {/* How It Works */}
+          <HowItWorks />
 
           {/* Features Grid */}
           <section className="container mx-auto px-4 py-20">
@@ -290,6 +308,9 @@ export default function HomePage() {
             </div>
           </section>
 
+          {/* FAQ Section */}
+          <FAQ />
+
           {/* CTA Section */}
           <section className="container mx-auto px-4 py-20">
             <motion.div
@@ -300,7 +321,7 @@ export default function HomePage() {
               transition={{ duration: 0.5 }}
             >
               <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600" />
-              <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-20" />
+              <div className="absolute inset-0 dot-grid" />
               <div className="relative px-8 py-16 sm:px-16 sm:py-20 text-center">
                 <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
                   Ready to build better habits?
@@ -323,19 +344,74 @@ export default function HomePage() {
 
         {/* Footer */}
         <footer className="border-t bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm py-12">
-          <div className="container mx-auto px-4 text-center">
-            <div className="flex items-center justify-center gap-2 mb-3">
-              <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600">
-                <svg className="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4" />
-                  <path strokeLinecap="round" d="M21 12a9 9 0 11-6.22-8.56" />
-                </svg>
+          <div className="container mx-auto px-4">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+              {/* Logo and tagline */}
+              <div className="flex flex-col items-center md:items-start gap-2">
+                <div className="flex items-center gap-2">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 shadow-lg shadow-blue-500/30">
+                    <svg className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4" />
+                      <path strokeLinecap="round" d="M21 12a9 9 0 11-6.22-8.56" />
+                    </svg>
+                  </div>
+                  <span className="font-bold text-xl bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">HabitFlow</span>
+                </div>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  Build habits that stick
+                </p>
               </div>
-              <span className="font-semibold text-gray-900 dark:text-white">HabitFlow</span>
+
+              {/* Social links */}
+              <div className="flex items-center gap-4">
+                <a
+                  href="https://github.com/aandrew-el/habit-tracker"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-all hover:scale-110"
+                  aria-label="GitHub"
+                >
+                  <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
+                  </svg>
+                </a>
+                <a
+                  href="https://twitter.com/aandrew_el"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-all hover:scale-110"
+                  aria-label="Twitter"
+                >
+                  <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                  </svg>
+                </a>
+                <a
+                  href="https://linkedin.com/in/aandrew-el"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-all hover:scale-110"
+                  aria-label="LinkedIn"
+                >
+                  <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                  </svg>
+                </a>
+              </div>
+
+              {/* Built with */}
+              <div className="flex flex-col items-center md:items-end gap-2">
+                <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+                  <span>Built with</span>
+                  <span className="font-semibold text-gray-700 dark:text-gray-300">Next.js</span>
+                  <span>&</span>
+                  <span className="font-semibold text-gray-700 dark:text-gray-300">Supabase</span>
+                </div>
+                <p className="text-xs text-gray-400 dark:text-gray-500">
+                  {new Date().getFullYear()} HabitFlow. Free forever.
+                </p>
+              </div>
             </div>
-            <p className="text-sm text-gray-600 dark:text-gray-400">
-              Built with care by Andrew El-Sayegh
-            </p>
           </div>
         </footer>
       </div>
@@ -351,7 +427,7 @@ function FeatureCard({ feature, index }: { feature: { icon: React.ElementType; t
   return (
     <motion.div
       ref={ref}
-      className="group relative rounded-2xl border border-gray-200/50 bg-white/70 dark:border-gray-700/50 dark:bg-gray-800/70 backdrop-blur-sm p-8 text-left shadow-sm transition-all hover:shadow-xl hover:shadow-blue-500/10 hover:border-blue-200 dark:hover:border-blue-700"
+      className="group relative rounded-2xl border border-gray-200/50 bg-white/70 dark:border-gray-700/50 dark:bg-gray-800/70 backdrop-blur-sm p-8 text-left shadow-sm transition-all hover:shadow-xl hover:shadow-blue-500/10 gradient-border overflow-hidden"
       initial={{ opacity: 0, y: 40, rotateY: index % 2 === 0 ? -10 : 10 }}
       animate={isInView ? { opacity: 1, y: 0, rotateY: 0 } : {}}
       transition={{
