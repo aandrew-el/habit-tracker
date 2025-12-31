@@ -1,36 +1,113 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# HabitFlow
+
+A modern habit tracking app with AI-powered insights, streak tracking, and beautiful analytics.
+
+**[Live Demo](https://habittracker-livid-three.vercel.app)** | **[Try it Free](https://habittracker-livid-three.vercel.app/signup)**
+
+## Features
+
+- **Unlimited Habit Tracking** - Create habits with custom colors, icons, and schedules
+- **Streak System** - Build momentum with visual streak counters and animations
+- **Calendar Heatmap** - See your entire history at a glance
+- **AI-Powered Insights** - Get personalized recommendations and weekly summaries via OpenAI
+- **Push Notifications** - Never miss a habit with browser notifications
+- **Journal** - Reflect on your progress with daily notes
+- **Achievements** - Unlock badges as you build consistency
+- **Dark Mode** - Easy on the eyes, day or night
+- **PWA Support** - Install on any device for a native app experience
+
+## Tech Stack
+
+| Category | Technology |
+|----------|------------|
+| Framework | Next.js 14 (App Router) |
+| Language | TypeScript |
+| Styling | Tailwind CSS |
+| UI Components | shadcn/ui |
+| Database | Supabase (PostgreSQL) |
+| Authentication | Supabase Auth (Google OAuth + Email) |
+| AI | OpenAI GPT-4 |
+| Animations | Framer Motion |
+| Deployment | Vercel |
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
+- Node.js 18+
+- A Supabase account
+- An OpenAI API key (for AI features)
+
+### Installation
+
+1. Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/aandrew-el/habit-tracker.git
+cd habit-tracker
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Set up environment variables:
+```bash
+cp .env.example .env.local
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Fill in your credentials:
+```env
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+OPENAI_API_KEY=your_openai_key
+NEXT_PUBLIC_VAPID_PUBLIC_KEY=your_vapid_public_key
+VAPID_PRIVATE_KEY=your_vapid_private_key
+```
 
-## Learn More
+4. Run the development server:
+```bash
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+Open [http://localhost:3000](http://localhost:3000) to see the app.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+├── app/                    # Next.js App Router pages
+│   ├── (auth)/            # Login/signup pages
+│   ├── api/               # API routes (AI, push notifications)
+│   └── dashboard/         # Main app pages
+├── components/            # React components
+│   ├── landing/          # Landing page components
+│   └── ui/               # shadcn/ui components
+├── hooks/                 # Custom React hooks
+├── lib/                   # Utilities and configurations
+└── public/               # Static assets
+```
 
-## Deploy on Vercel
+## Key Features Explained
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### AI Insights
+The app uses OpenAI's GPT-4 to analyze your habit patterns and provide:
+- Weekly performance summaries
+- Personalized recommendations
+- Correlation analysis between habits
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Push Notifications
+Implemented using the Web Push API with VAPID authentication. Users can enable browser notifications to get reminders for their habits.
+
+### Streak Tracking
+Streaks are calculated based on consecutive completions. The system handles:
+- Daily habits
+- Weekly habits (specific days)
+- Timezone-aware calculations
+
+## License
+
+MIT
+
+---
+
+Built with Next.js, Supabase, and OpenAI.
