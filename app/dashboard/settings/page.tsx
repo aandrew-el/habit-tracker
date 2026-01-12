@@ -187,7 +187,7 @@ export default function SettingsPage() {
                   </div>
                 </>
               ) : (
-                <div className="text-center space-y-4 py-4">
+                <div className="text-center space-y-4">
                   <p className="text-gray-600 dark:text-gray-400">
                     Sign in to sync your habits across devices and unlock all features
                   </p>
