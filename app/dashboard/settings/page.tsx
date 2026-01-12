@@ -153,18 +153,20 @@ export default function SettingsPage() {
           transition={{ duration: 0.5, delay: 0.2 }}
         >
           <Card className="border-2 border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-lg">
-            <CardHeader className="pb-6">
+            <CardHeader className={isAuthenticated ? "pb-6" : "pb-4"}>
               <div className="flex items-center gap-4">
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 shadow-lg shadow-blue-500/30">
                   <User className="h-6 w-6 text-white" />
                 </div>
                 <div>
                   <CardTitle className="text-xl font-bold dark:text-white">Account</CardTitle>
-                  <CardDescription className="text-sm dark:text-gray-400">Your account information</CardDescription>
+                  <CardDescription className="text-sm dark:text-gray-400">
+                    {isAuthenticated ? "Your account information" : "Sign in to access your account"}
+                  </CardDescription>
                 </div>
               </div>
             </CardHeader>
-            <CardContent className="space-y-6">
+            <CardContent className={isAuthenticated ? "space-y-6" : ""}>
               {isAuthenticated ? (
                 <>
                   <div className="space-y-3">
@@ -187,11 +189,7 @@ export default function SettingsPage() {
                   </div>
                 </>
               ) : (
-                <div className="text-center space-y-4">
-                  <p className="text-gray-600 dark:text-gray-400">
-                    Sign in to sync your habits across devices and unlock all features
-                  </p>
-                  <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <div className="flex flex-col sm:flex-row gap-3 justify-center">
                     <Link href="/login">
                       <Button className="w-full sm:w-auto rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 font-semibold shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 transition-all duration-200 text-white px-8">
                         <LogIn className="h-4 w-4 mr-2" />
@@ -204,7 +202,6 @@ export default function SettingsPage() {
                         Create Account
                       </Button>
                     </Link>
-                  </div>
                 </div>
               )}
             </CardContent>

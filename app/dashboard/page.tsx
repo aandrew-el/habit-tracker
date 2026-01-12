@@ -597,7 +597,6 @@ export default function DashboardPage() {
         <AuthPrompt
           title="Track Your Habits"
           description="Sign in to start building better habits and track your progress"
-          icon={<span className="text-4xl">🎯</span>}
         />
       ) : habits.length === 0 ? (
         /* Authenticated Empty State */
