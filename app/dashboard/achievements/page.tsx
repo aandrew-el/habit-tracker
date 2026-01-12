@@ -8,8 +8,6 @@ import { calculateCurrentStreak, calculateLongestStreak } from '@/lib/streak-cal
 import { Skeleton } from '@/components/ui/skeleton'
 import { toast } from 'sonner'
 import { motion } from 'framer-motion'
-import { Trophy } from 'lucide-react'
-import { AuthPrompt } from '@/components/auth-prompt'
 
 interface Habit {
   id: string
@@ -129,33 +127,6 @@ export default function AchievementsPage() {
           ))}
         </div>
       </div>
-    )
-  }
-
-  if (!isAuthenticated) {
-    return (
-      <motion.div
-        className="space-y-8"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-      >
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-        >
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
-            Achievements
-          </h1>
-          <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Unlock achievements as you build habits</p>
-        </motion.div>
-        <AuthPrompt
-          title="Earn Achievements"
-          description="Sign in to start earning achievements and tracking your milestones"
-          icon={<Trophy className="h-10 w-10 text-white" />}
-        />
-      </motion.div>
     )
   }
 
