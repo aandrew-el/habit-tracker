@@ -15,8 +15,9 @@ import {
   toISODateString,
   type CalendarDay,
 } from '@/lib/calendar-utils'
-import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
+import { ChevronLeftIcon, ChevronRightIcon, Calendar } from 'lucide-react'
 import { HabitHeatmap } from '@/components/habit-heatmap'
+import { AuthPrompt } from '@/components/auth-prompt'
 
 interface Habit {
   id: string
@@ -44,6 +45,7 @@ export default function CalendarPage() {
   const [error, setError] = useState<string | null>(null)
   const [selectedDate, setSelectedDate] = useState<Date | null>(null)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null)
 
   // Generate calendar grid
   const calendarDays = generateCalendarGrid(currentYear, currentMonth)
@@ -79,8 +81,16 @@ export default function CalendarPage() {
       } = await supabase.auth.getUser()
 
       if (userError || !user) {
-        throw new Error('You must be logged in')
+        // User is not authenticated - handle gracefully
+        setIsAuthenticated(false)
+        setHabits([])
+        setCompletions([])
+        setYearCompletions([])
+        setIsLoading(false)
+        return
       }
+
+      setIsAuthenticated(true)
 
       // Fetch all habits
       const { data: habitsData, error: habitsError } = await supabase
@@ -254,6 +264,33 @@ export default function CalendarPage() {
 
   if (isLoading) {
     return <CalendarSkeleton />
+  }
+
+  if (!isAuthenticated) {
+    return (
+      <motion.div
+        className="space-y-8"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+        >
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
+            Calendar
+          </h1>
+          <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Visualize your habit progress</p>
+        </motion.div>
+        <AuthPrompt
+          title="Visualize Your Progress"
+          description="Sign in to see your habit calendar and track your consistency over time"
+          icon={<Calendar className="h-10 w-10 text-white" />}
+        />
+      </motion.div>
+    )
   }
 
   if (error) {

@@ -9,7 +9,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { ThemeToggle } from '@/components/theme-toggle'
-import { User, Moon, Download, Info, LogOut, Bell } from 'lucide-react'
+import { User, Moon, Download, Info, LogOut, Bell, LogIn, UserPlus } from 'lucide-react'
+import Link from 'next/link'
 import { SettingsSkeleton } from '@/components/settings-skeleton'
 import { NotificationSettings } from '@/components/notification-settings'
 
@@ -17,21 +18,27 @@ export default function SettingsPage() {
   const router = useRouter()
   const [email, setEmail] = useState<string>('')
   const [isLoading, setIsLoading] = useState(true)
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const supabase = createClient()
         const { data: { user }, error } = await supabase.auth.getUser()
-        
+
         if (error || !user) {
-          toast.error('Failed to load user data')
+          // User is not authenticated - handle gracefully
+          setIsAuthenticated(false)
+          setEmail('')
+          setIsLoading(false)
           return
         }
-        
+
+        setIsAuthenticated(true)
         setEmail(user.email || '')
       } catch {
-        toast.error('Failed to load settings')
+        // Silently handle - not authenticated is a valid state
+        setIsAuthenticated(false)
       } finally {
         setIsLoading(false)
       }
@@ -158,24 +165,48 @@ export default function SettingsPage() {
               </div>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="space-y-3">
-                <Label className="text-sm font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wide">Email Address</Label>
-                <div className="rounded-xl border-2 border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 px-4 py-3.5 text-gray-900 dark:text-white font-medium">
-                  {email}
+              {isAuthenticated ? (
+                <>
+                  <div className="space-y-3">
+                    <Label className="text-sm font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wide">Email Address</Label>
+                    <div className="rounded-xl border-2 border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 px-4 py-3.5 text-gray-900 dark:text-white font-medium">
+                      {email}
+                    </div>
+                  </div>
+                  <div className="pt-2">
+                    <motion.div whileTap={{ scale: 0.95 }}>
+                      <Button
+                        onClick={handleSignOut}
+                        variant="destructive"
+                        className="w-full h-12 rounded-xl font-semibold shadow-md shadow-red-500/20 hover:shadow-lg hover:shadow-red-500/30"
+                      >
+                        <LogOut className="h-4 w-4 mr-2" />
+                        Sign Out
+                      </Button>
+                    </motion.div>
+                  </div>
+                </>
+              ) : (
+                <div className="text-center space-y-4 py-4">
+                  <p className="text-gray-600 dark:text-gray-400">
+                    Sign in to sync your habits across devices and unlock all features
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                    <Link href="/login">
+                      <Button className="w-full sm:w-auto rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 font-semibold shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 transition-all duration-200 text-white px-8">
+                        <LogIn className="h-4 w-4 mr-2" />
+                        Sign In
+                      </Button>
+                    </Link>
+                    <Link href="/signup">
+                      <Button variant="outline" className="w-full sm:w-auto rounded-xl border-2 font-semibold px-8">
+                        <UserPlus className="h-4 w-4 mr-2" />
+                        Create Account
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
-              </div>
-              <div className="pt-2">
-                <motion.div whileTap={{ scale: 0.95 }}>
-                  <Button 
-                    onClick={handleSignOut}
-                    variant="destructive"
-                    className="w-full h-12 rounded-xl font-semibold shadow-md shadow-red-500/20 hover:shadow-lg hover:shadow-red-500/30"
-                  >
-                    <LogOut className="h-4 w-4 mr-2" />
-                    Sign Out
-                  </Button>
-                </motion.div>
-              </div>
+              )}
             </CardContent>
           </Card>
         </motion.div>
@@ -253,18 +284,21 @@ export default function SettingsPage() {
               </div>
             </CardHeader>
             <CardContent className="space-y-4">
-              <motion.div whileTap={{ scale: 0.95 }}>
-                <Button 
+              <motion.div whileTap={isAuthenticated ? { scale: 0.95 } : {}}>
+                <Button
                   onClick={handleExportData}
                   variant="outline"
-                  className="w-full h-12 rounded-xl border-2 font-semibold hover:bg-green-50 dark:hover:bg-green-900/20 hover:border-green-300 dark:hover:border-green-700 transition-all"
+                  disabled={!isAuthenticated}
+                  className="w-full h-12 rounded-xl border-2 font-semibold hover:bg-green-50 dark:hover:bg-green-900/20 hover:border-green-300 dark:hover:border-green-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <Download className="h-4 w-4 mr-2" />
                   Export Data as CSV
                 </Button>
               </motion.div>
               <p className="mt-3 text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
-                Download all your habits and completion history as a CSV file for backup or analysis
+                {isAuthenticated
+                  ? 'Download all your habits and completion history as a CSV file for backup or analysis'
+                  : 'Sign in to export your habit data'}
               </p>
             </CardContent>
           </Card>

@@ -18,7 +18,8 @@ import { useKeyboardShortcuts } from '@/hooks/use-keyboard-shortcuts'
 import { useDebouncedValue } from '@/hooks/use-debounced-value'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Search } from 'lucide-react'
+import { Search, Target } from 'lucide-react'
+import { AuthPrompt } from '@/components/auth-prompt'
 import { checkAchievements, checkEarlyBird, checkNightOwl, checkComebackKid, type Achievement } from '@/lib/achievements'
 import { calculateCurrentStreak, calculateLongestStreak } from '@/lib/streak-calculator'
 
@@ -55,6 +56,7 @@ export default function DashboardPage() {
   const [frequencyFilter, setFrequencyFilter] = useState<'all' | 'daily' | 'weekly'>('all')
   const [previousAchievements, setPreviousAchievements] = useState<Achievement[]>([])
   const [recentAchievements, setRecentAchievements] = useState<Achievement[]>([])
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null)
 
   // Debounce search query for performance
   const debouncedSearchQuery = useDebouncedValue(searchQuery, 300)
@@ -151,8 +153,14 @@ export default function DashboardPage() {
       } = await supabase.auth.getUser()
 
       if (userError || !user) {
-        throw new Error('You must be logged in')
+        // User is not authenticated - show empty state with auth prompt
+        setIsAuthenticated(false)
+        setHabits([])
+        setIsLoading(false)
+        return
       }
+
+      setIsAuthenticated(true)
 
       // Fetch all habits for this user
       const { data: habitsData, error: fetchError} = await supabase
@@ -584,16 +592,23 @@ export default function DashboardPage() {
         <RecentAchievements achievements={recentAchievements} />
       )}
 
-      {habits.length === 0 ? (
-        /* Empty State */
-        <motion.div 
+      {!isAuthenticated && habits.length === 0 ? (
+        /* Unauthenticated Empty State */
+        <AuthPrompt
+          title="Track Your Habits"
+          description="Sign in to start building better habits and track your progress"
+          icon={<Target className="h-10 w-10 text-white" />}
+        />
+      ) : habits.length === 0 ? (
+        /* Authenticated Empty State */
+        <motion.div
           className="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-gray-300 dark:border-gray-700 bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 py-24 shadow-sm"
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
           <div className="text-center max-w-md">
-            <motion.div 
+            <motion.div
               className="mb-6 text-7xl"
               animate={{ y: [0, -10, 0] }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
@@ -604,7 +619,7 @@ export default function DashboardPage() {
               No habits yet
             </h2>
             <p className="text-gray-600 dark:text-gray-400 text-lg mb-6">
-              Start building better habits! Click "Add Habit" to create your first habit.
+              Start building better habits! Click &quot;Add Habit&quot; to create your first habit.
             </p>
             <Button
               onClick={() => setIsAddDialogOpen(true)}

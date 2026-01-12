@@ -15,6 +15,7 @@ import { NetworkError } from '@/components/network-error'
 import { getCategoryConfig } from '@/lib/categories'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { AIInsightsTab } from '@/components/ai-insights-tab'
+import { AuthPrompt } from '@/components/auth-prompt'
 
 interface Habit {
   id: string
@@ -33,17 +34,24 @@ export default function AnalyticsPage() {
   const [completions, setCompletions] = useState<Completion[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const supabase = createClient()
         const { data: { user }, error: userError } = await supabase.auth.getUser()
-        
+
         if (userError || !user) {
-          toast.error('You must be logged in')
+          // User is not authenticated - handle gracefully
+          setIsAuthenticated(false)
+          setHabits([])
+          setCompletions([])
+          setIsLoading(false)
           return
         }
+
+        setIsAuthenticated(true)
 
         // Fetch habits
         const { data: habitsData, error: habitsError } = await supabase
@@ -317,6 +325,33 @@ export default function AnalyticsPage() {
 
   if (isLoading) {
     return <AnalyticsSkeleton />
+  }
+
+  if (!isAuthenticated) {
+    return (
+      <motion.div
+        className="space-y-8"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+        >
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
+            Analytics
+          </h1>
+          <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Track your habit performance</p>
+        </motion.div>
+        <AuthPrompt
+          title="See Your Stats"
+          description="Sign in to view detailed analytics and insights about your habits"
+          icon={<BarChart3 className="h-10 w-10 text-white" />}
+        />
+      </motion.div>
+    )
   }
 
   if (error) {

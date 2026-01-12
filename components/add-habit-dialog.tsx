@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import { createClient } from '@/lib/supabase'
 import {
@@ -48,6 +49,7 @@ export function AddHabitDialog({
   onOpenChange,
   onHabitAdded,
 }: AddHabitDialogProps) {
+  const router = useRouter()
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const [frequency, setFrequency] = useState<'daily' | 'weekly'>('daily')
@@ -96,8 +98,10 @@ export function AddHabitDialog({
       } = await supabase.auth.getUser()
 
       if (userError || !user) {
-        toast.error('You must be logged in to add a habit')
-        throw new Error('You must be logged in to add a habit')
+        toast.error('Please sign in to add a habit')
+        onOpenChange(false)
+        router.push('/login?redirect=/dashboard')
+        return
       }
 
       // Insert habit and get the inserted data back
