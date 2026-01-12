@@ -18,7 +18,7 @@ import { useKeyboardShortcuts } from '@/hooks/use-keyboard-shortcuts'
 import { useDebouncedValue } from '@/hooks/use-debounced-value'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Search, Target } from 'lucide-react'
+import { Search, Target, Crosshair } from 'lucide-react'
 import { AuthPrompt } from '@/components/auth-prompt'
 import { checkAchievements, checkEarlyBird, checkNightOwl, checkComebackKid, type Achievement } from '@/lib/achievements'
 import { calculateCurrentStreak, calculateLongestStreak } from '@/lib/streak-calculator'
@@ -597,7 +597,7 @@ export default function DashboardPage() {
         <AuthPrompt
           title="Track Your Habits"
           description="Sign in to start building better habits and track your progress"
-          icon={<Target className="h-10 w-10 text-white" />}
+          icon={<Crosshair className="h-10 w-10 text-white" />}
         />
       ) : habits.length === 0 ? (
         /* Authenticated Empty State */
